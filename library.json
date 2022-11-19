@@ -1,0 +1,22 @@
+{
+    "name": "ArduinoPylontech",
+    "version": "1.0",
+    "description": "RS485 Pylontech protocol",
+    "keywords": "pv, solar, battery, bms, rs485",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/altech/ArduinoPylontech.git"
+    },
+    "authors":
+    [
+      {
+        "url": "https://github.com/altelch/ArduinoPylontech/discussions/",
+        "maintainer": true
+      }
+    ],
+    "license": "GPL-3.0-only",
+    "homepage": "https://github.com/altelch/ArduinoPylontech/",
+    "frameworks": "arduino",
+    "platforms": ["esp32", "espressif8266"]
+  }
