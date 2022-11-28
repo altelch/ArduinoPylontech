@@ -764,7 +764,7 @@ void Pylonframe::PylonAnalogValue::print(Print *out) {
     out->printf("TemperatureCell1to4: %.1f\n", TemperatureCell1to4());
     out->printf("TemperatureCell5to8: %.1f\n", TemperatureCell5to8());
     out->printf("TemperatureCell9to12: %.1f\n", TemperatureCell9to12());
-    out->printf("TemperatureCell13to15: %.1f\n", TemperatureCell13to16());
+    out->printf("TemperatureCell13to16: %.1f\n", TemperatureCell13to16());
     out->printf("Current: %.1f\n", Current());
     out->printf("ModuleVoltage: %.3f\n", ModuleVoltage());
     out->printf("RemainingCapacity: %.3f\n", RemainingCapacity());
@@ -783,7 +783,7 @@ void Pylonframe::PylonAnalogValue::json(DynamicJsonDocument &doc, uint8_t module
     doc["pylontech"][String(module)]["Analog"]["TemperatureCell1to4"] = TemperatureCell1to4();
     doc["pylontech"][String(module)]["Analog"]["TemperatureCell5to8"] = TemperatureCell5to8();
     doc["pylontech"][String(module)]["Analog"]["TemperatureCell9to12"] = TemperatureCell9to12();
-    doc["pylontech"][String(module)]["Analog"]["TemperatureCell13to15"] = TemperatureCell13to16();
+    doc["pylontech"][String(module)]["Analog"]["TemperatureCell13to16"] = TemperatureCell13to16();
     doc["pylontech"][String(module)]["Analog"]["Current"] = Current();
     doc["pylontech"][String(module)]["Analog"]["ModuleVoltage"] = ModuleVoltage();
     doc["pylontech"][String(module)]["Analog"]["RemainingCapacity"] = RemainingCapacity();
