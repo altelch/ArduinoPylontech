@@ -6,6 +6,7 @@
 */
 
 #include <ArduinoJson.h>
+#include <math.h>
 #include <pylontech.h>
 
 void Pylonclient::Begin(Stream *serial)
@@ -773,12 +774,23 @@ void Pylonframe::PylonAnalogValue::print(Print *out) {
 }
 
 void Pylonframe::PylonAnalogValue::json(DynamicJsonDocument &doc, uint8_t module) {
+    uint16_t cell_min_voltage=-1;
+    uint16_t cell_max_voltage=0;
+    uint16_t cell_delta_voltage=0;
+    uint16_t cell_tmp=0;
     doc["pylontech"][String(module)]["Analog"]["UnreadAlarmValueChange"] = InfoFlags() & PylonInfoFlags::UnreadAlarmValueChange?"true":"false";
     doc["pylontech"][String(module)]["Analog"]["UnreadSwitchingValueChange"] = InfoFlags() & PylonInfoFlags::UnreadSwitchingValueChange?"true":"false";
     for (size_t i = 0; i < CellCount(); i++)
     {
-        doc["pylontech"][String(module)]["Analog"]["CellVoltage"][String(i+1)] = CellVoltage(i);
+        cell_tmp = CellVoltage(i);
+        if(cell_tmp > cell_max_voltage) cell_max_voltage=cell_tmp;
+        if(cell_tmp < cell_min_voltage) cell_min_voltage=cell_tmp;
+        doc["pylontech"][String(module)]["Analog"]["CellVoltage"][String(i+1)] = cell_tmp;
     }
+    cell_delta_voltage=cell_max_voltage-cell_min_voltage;
+    doc["pylontech"][String(module)]["Analog"]["MinCellVoltage"] = cell_min_voltage;
+    doc["pylontech"][String(module)]["Analog"]["MaxCellVoltage"] = cell_max_voltage;
+    doc["pylontech"][String(module)]["Analog"]["CellVoltageDelta"] = cell_delta_voltage;
     doc["pylontech"][String(module)]["Analog"]["BmsTemperature"] = BmsTemperature();
     doc["pylontech"][String(module)]["Analog"]["TemperatureCell1to4"] = TemperatureCell1to4();
     doc["pylontech"][String(module)]["Analog"]["TemperatureCell5to8"] = TemperatureCell5to8();
@@ -788,5 +800,6 @@ void Pylonframe::PylonAnalogValue::json(DynamicJsonDocument &doc, uint8_t module
     doc["pylontech"][String(module)]["Analog"]["ModuleVoltage"] = ModuleVoltage();
     doc["pylontech"][String(module)]["Analog"]["RemainingCapacity"] = RemainingCapacity();
     doc["pylontech"][String(module)]["Analog"]["TotalCapacity"] = TotalCapacity();
+    doc["pylontech"][String(module)]["Analog"]["SoC"] =  round(RemainingCapacity()/TotalCapacity());
     doc["pylontech"][String(module)]["Analog"]["CycleNumber"] = CycleNumber();
 }
