@@ -800,6 +800,6 @@ void Pylonframe::PylonAnalogValue::json(DynamicJsonDocument &doc, uint8_t module
     doc["pylontech"][String(module)]["Analog"]["ModuleVoltage"] = ModuleVoltage();
     doc["pylontech"][String(module)]["Analog"]["RemainingCapacity"] = RemainingCapacity();
     doc["pylontech"][String(module)]["Analog"]["TotalCapacity"] = TotalCapacity();
-    doc["pylontech"][String(module)]["Analog"]["SoC"] =  round(RemainingCapacity()/TotalCapacity());
+    doc["pylontech"][String(module)]["Analog"]["SoC"] =  round(100*(RemainingCapacity()/TotalCapacity()));
     doc["pylontech"][String(module)]["Analog"]["CycleNumber"] = CycleNumber();
 }
